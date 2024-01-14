@@ -1,12 +1,20 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+generator drizzle {
+  provider = "prisma-generator-drizzle"
+  formatter = "prettier"
+  output = "drizzle/schema"
+}
+
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  // This is should be sqlite but I'm using postgres for the demo, so the app
+  // won't actually work if you try to run its
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -50,7 +58,8 @@ model NoteImage {
   id          String  @id @default(cuid())
   altText     String?
   contentType String
-  blob        Bytes
+  // Not supported by prisma-generator-drizzle
+  // blob        Bytes
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -66,7 +75,8 @@ model UserImage {
   id          String  @id @default(cuid())
   altText     String?
   contentType String
-  blob        Bytes
+  // Not supported by prisma-generator-drizzle
+  // blob        Bytes
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
